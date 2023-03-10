@@ -1,25 +1,24 @@
-import logo from './logo.svg';
-import './App.css';
+import withSearch from "./components/withSearch/withSearch";
+import ProductList from "./components/BookList/BookList";
+import "./App.css";
+import { useFetch } from "./hooks/useFetch";
+const HigherOrder = withSearch(ProductList);
 
-function App() {
+
+
+
+const App = () => {
+  const [loading, data] = useFetch('./books.json')
+
+  if(loading){
+    return <p>Loading books...</p>
+  }
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+    <>
+      <h1>BEST SELLING BOOKS</h1>
+      <HigherOrder books={data.items}/>
+    </>
+  )
 }
 
 export default App;
